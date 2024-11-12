@@ -3,11 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flask App</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Example Page</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-    <h1>Hello, Flask!</h1>
-    <p>This is a basic Flask application.</p>
+    <h1>Hello, World!</h1>
+    <p>This is a simple example of CSS.</p>
+
+    <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data">
+        <label for="imageUpload">Upload an image:</label>
+        <input type="file" id="imageUpload" name="image" accept="image/*">
+        <button type="submit">Upload</button>
+    </form>
+
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            fetch('/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                alert('Image uploaded successfully!');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to upload image.');
+            });
+        });
+    </script>
 </body>
 </html>
