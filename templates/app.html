@@ -1,12 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Pennycress Segmentation App</title>
-    <link rel="stylesheet" href="styles.css">
+    <h1>Pennycress Segmentation App</h1>
+    <link rel="stylesheet" href="static/style.css">
 </head>
 <body>
-    <h1>Pennycress Segmentation App</h1>
-    <button onclick="document.getElementById('fileInput').click()">Upload Image</button>
-    <input type="file" id="fileInput" style="display: none;">
+    <div>
+        <button onclick="document.getElementById('fileInput').click()">Upload Image</button>
+        <button onclick="clearImages()">Clear Images</button>
+    </div>
+    <input type="file" id="fileInput" style="display: none;" onchange="displayImage(event)">
+    <div id="imageContainer"></div>
+
+    <script>
+        function displayImage(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                const image = document.createElement('img');
+                image.src = e.target.result;
+                document.getElementById('imageContainer').appendChild(image);
+            }
+
+            reader.readAsDataURL(file);
+        }
+
+        function clearImages() {
+            const imageContainer = document.getElementById('imageContainer');
+            while (imageContainer.firstChild) {
+                imageContainer.removeChild(imageContainer.firstChild);
+            }
+        }
+    </script>
 </body>
 </html>
